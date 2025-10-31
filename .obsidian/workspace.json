@@ -11,12 +11,14 @@
             "id": "0f028825c0bf8d68",
             "type": "leaf",
             "state": {
-              "type": "pdf",
+              "type": "markdown",
               "state": {
-                "file": "Archive/Simulated analysis and hardware implementation of voiceband circular microphone array.pdf"
+                "file": "Research/Mikrofon Dizi Tasarım Teorisi/4. Donanım Bileşenlerinin Sistem Doğruluğuna Etkisi.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-file-text",
-              "title": "Simulated analysis and hardware implementation of voiceband circular microphone array"
+              "icon": "lucide-file",
+              "title": "4. Donanım Bileşenlerinin Sistem Doğruluğuna Etkisi"
             }
           }
         ]
@@ -167,18 +169,19 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "a112d1ff35515f5f",
+  "active": "0f028825c0bf8d68",
   "lastOpenFiles": [
+    "Research/Mikrofon Dizi Tasarım Teorisi/7. Donanım Fiyat analizi.md",
+    "Research/Mikrofon Dizi Tasarım Teorisi/4. Donanım Bileşenlerinin Sistem Doğruluğuna Etkisi.md",
+    "Research/Mikrofon Dizi Tasarım Teorisi/5. Algoritmik Yaklaşımlar ve Tasarım Gereksinimleri.md",
+    "Research/Hardware/2. Zaman ve Mekan Örneklemesi.md",
+    "Archive/Simulated analysis and hardware implementation of voiceband circular microphone array.pdf",
     "Archive/PILAR Acoustic Gunshot Detection & Localization system Principles of acoustic localization of small caliber gunshots..pdf",
     "Archive/Beamforming Technical Review.pdf",
     "Archive/A Survey of Sound Source Localization and Detection Methods.pdf",
-    "Research/Mikrofon Dizi Tasarım Teorisi/7. Donanım Fiyat analizi.md",
-    "Research/Mikrofon Dizi Tasarım Teorisi/5. Algoritmik Yaklaşımlar ve Tasarım Gereksinimleri.md",
-    "Research/Mikrofon Dizi Tasarım Teorisi/4. Donanım Bileşenlerinin Sistem Doğruluğuna Etkisi.md",
     "Research/Mikrofon Dizi Tasarım Teorisi/3. Örnekleme Teorisi Zaman ve Uzay.md.md",
     "Research/Mikrofon Dizi Tasarım Teorisi/2. Dizi Geometrisi ve Yönlendirme Vektörü.md",
     "Research/Mikrofon Dizi Tasarım Teorisi/1. Sinyal Modeli ve Akustik Varsayımlar.md",
-    "Research/Hardware/2. Zaman ve Mekan Örneklemesi.md",
     "Research/Hardware/1. Dizi Geometrisi Karar Matrisi.md",
     "Archive/Sound Source Localization for Unmanned Aerial Vehicles in Low.pdf",
     "Archive/Sound_Event_Detection_and_Localization_with_Distance_Estimation.pdf",
@@ -186,7 +189,6 @@
     "Archive/The Design of an Microphone Array.pdf",
     "Archive/Sound Source Localization A Survey.pdf",
     "Archive/A survey of sound source localization with deep learning.pdf",
-    "Archive/Microphone Arrays  A Tutorial.pdf",
     "Research/Hardware/2. Mikrofon Dönüştürücü Seçimi/1. Mikrofon Tipi Karşılaştırması.md",
     "Research/Hardware/1. Dizi Tasarımı ve Geometrisi/3. Far-Field ve Near Field Karşılaştırma.md",
     "Research/Hardware/1. Dizi Tasarımı ve Geometrisi/4. Kablo Yönetimi ve Dizi Uzunluğu Kısıtları.md",
