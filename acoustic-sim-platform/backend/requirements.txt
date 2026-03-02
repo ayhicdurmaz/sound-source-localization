@@ -1,0 +1,8 @@
+fastapi
+uvicorn[standard]
+websockets
+numpy
+scipy
+soundfile
+pyroomacoustics
+python-multipart
