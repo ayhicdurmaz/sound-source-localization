@@ -16,6 +16,16 @@ def _ensure_session_dir(session_id: str) -> str:
     os.makedirs(path, exist_ok=True)
     return path
 
+def save_session_configuration(session_id: str, config: json) -> str:
+    """
+    Simülasyon oturumu için yapılandırmayı kaydeder.
+    Döndürür: JSON dosyasının yolu (göreceli)
+    """
+    session_dir = _ensure_session_dir(session_id)
+    config_path = os.path.join(session_dir, "config_session.json")
+    with open(config_path, "w") as f:
+        json.dump(config, f, indent=2)
+    return os.path.relpath(config_path, DATASET_ROOT)
 
 def save_sample(
     session_id: str,

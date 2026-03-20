@@ -249,6 +249,7 @@ def simulate(
         "source_pos": src_pos.tolist(),
         "azimuth_deg": azimuth_deg,
         "distance_m": distance_m,
+        "mic_array": mic_arr.tolist(),
     }
 
 

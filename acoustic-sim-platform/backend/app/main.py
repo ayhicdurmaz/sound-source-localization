@@ -22,7 +22,7 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect, UploadFile, File, H
 from fastapi.middleware.cors import CORSMiddleware
 
 from .simulator import simulate, encode_wav_bytes, UPLOADS_DIR
-from .dataset_manager import save_sample
+from .dataset_manager import save_sample, save_session_configuration
 
 app = FastAPI(title="Acoustic Sim Platform API")
 
@@ -51,7 +51,6 @@ def _to_python(obj):
     if isinstance(obj, np.ndarray):
         return obj.tolist()
     return obj
-
 
 # ─────────────────────────────────────────────────────────────
 # Ses dosyası yükleme endpoint'leri
@@ -180,6 +179,8 @@ async def ws_simulate(websocket: WebSocket):
 
         session_id = f"session_{int(time.time())}_{uuid.uuid4().hex[:6]}"
 
+        save_session_configuration(session_id, config)
+
         await websocket.send_text(json.dumps({
             "type": "session_start",
             "session_id": session_id,
@@ -221,33 +222,9 @@ async def ws_simulate(websocket: WebSocket):
             source_signal = result["source_signal"]
 
             label = {
-                # ── Örnek kimliği ──
-                "sample_index":     i,
-                "session_id":       session_id,
-                # ── Kaynak konumu ──
                 "azimuth_deg":      float(azimuth),
                 "distance_m":       float(distance),
-                "source_pos":       result["source_pos"],
-                "field_mode":       field_mode,
-                # ── Mikrofon dizisi ──
-                "n_mics":           n_mics,
-                "center_mic":       center_mic,
-                "mic_radius_m":     mic_radius,
-                "mic_center":       [eff_cx, eff_cy, eff_cz],
-                #    # ── Fraunhofer sınırı ──
-                #    "ff_boundary_m":    ff_boundary_m,
-                #    "is_far_field":     float(distance) >= ff_boundary_m,
-                # ── Oda ──
-                "room_dims_m":      [room_x, room_y, room_z],
-                "rt60":             rt60,
-                # ── Sinyal & gürültü ──
-                "signal_type":      signal_type,
-                "custom_audio_file": custom_file,
-                "snr_db":           snr_db,
-                "ambient_snr_db":   ambient_snr_db,
-                # ── Ses formatı ──
-                "sample_rate":      sample_rate,
-                "n_audio_samples":  n_samples,
+                "source_pos":       result["source_pos"]
             }
 
             paths = save_sample(session_id, i, mic_signals, label, sample_rate)
