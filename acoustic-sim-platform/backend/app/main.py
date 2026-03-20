@@ -7,6 +7,7 @@ FastAPI Main Application
 """
 import asyncio
 import json
+from logging import config
 import math
 import base64
 import time
@@ -20,7 +21,7 @@ import numpy as np
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect, UploadFile, File, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
-from .simulator import simulate, encode_wav_bytes, SAMPLE_RATE, N_SAMPLES, UPLOADS_DIR
+from .simulator import simulate, encode_wav_bytes, UPLOADS_DIR
 from .dataset_manager import save_sample
 
 app = FastAPI(title="Acoustic Sim Platform API")
@@ -119,20 +120,18 @@ async def ws_simulate(websocket: WebSocket):
         raw = await websocket.receive_text()
         config = json.loads(raw)
 
-        n_samples      = int(config.get("n_samples", 10))
+        n_gens         = int(config.get("n_gens", 10))
         n_mics         = int(config.get("n_mics", 4))
         mic_radius     = float(config.get("mic_radius", 0.05))
         snr_db         = float(config.get("snr_db", 20))
         rt60           = float(config.get("rt60", 0.3))
         signal_type    = str(config.get("signal_type", "white_noise"))
+        custom_file    = config.get("custom_audio_file", None)
         field_mode     = str(config.get("field_mode", "nearfield"))
         min_dist       = float(config.get("min_distance", 0.5))
         max_dist       = float(config.get("max_distance", 2.5))
         delay_ms       = float(config.get("step_delay_ms", 200))
-        custom_file    = config.get("custom_audio_file", None)
         center_mic     = bool(config.get("center_mic", False))
-        ambient_snr_db = float(config.get("ambient_snr_db", 50.0))
-        ambient_file   = config.get("ambient_audio_file", None)
         room_x         = float(config.get("room_x", 6.0))
         room_y         = float(config.get("room_y", 6.0))
         room_z         = float(config.get("room_z", 3.0))
@@ -142,10 +141,16 @@ async def ws_simulate(websocket: WebSocket):
         mic_center_x   = float(mic_cx) if mic_cx is not None else None
         mic_center_y   = float(mic_cy) if mic_cy is not None else None
         mic_center_z   = float(mic_cz) if mic_cz is not None else None
+        sample_rate    = int(config.get("sample_rate", 16000))
+        duration_sec   = float(config.get("duration_sec", 1.0))
+        ambient_snr_db = float(config.get("ambient_snr_db", 50.0))
+        ambient_file   = config.get("ambient_audio_file", None)
+
+        n_samples = int(sample_rate * duration_sec)
 
         # Fraunhofer far-field sınırı: 2*D²/λ  (D=dizi çapı, λ=c/f_max, f_max=Nyquist=sr/2)
         _D = 2 * mic_radius
-        _lambda = 343.0 / (SAMPLE_RATE / 2)
+        _lambda = 343.0 / (sample_rate / 2)
         ff_boundary_m = round(2 * _D * _D / _lambda, 4)
 
         # Efektif mic merkezi (null → oda ortası)
@@ -178,11 +183,11 @@ async def ws_simulate(websocket: WebSocket):
         await websocket.send_text(json.dumps({
             "type": "session_start",
             "session_id": session_id,
-            "total": n_samples,
+            "total": n_gens,
         }))
 
         # ── 2. Döngü ──
-        for i in range(n_samples):
+        for i in range(n_gens):
             azimuth   = random.uniform(0, 360)
             distance  = random.uniform(min_dist, max_dist)
 
@@ -207,6 +212,8 @@ async def ws_simulate(websocket: WebSocket):
                     mic_center_x=mic_center_x,
                     mic_center_y=mic_center_y,
                     mic_center_z=mic_center_z,
+                    sample_rate=sample_rate,
+                    duration_sec=duration_sec,
                 ),
             )
 
@@ -227,9 +234,9 @@ async def ws_simulate(websocket: WebSocket):
                 "center_mic":       center_mic,
                 "mic_radius_m":     mic_radius,
                 "mic_center":       [eff_cx, eff_cy, eff_cz],
-                # ── Fraunhofer sınırı ──
-                "ff_boundary_m":    ff_boundary_m,
-                "is_far_field":     float(distance) >= ff_boundary_m,
+                #    # ── Fraunhofer sınırı ──
+                #    "ff_boundary_m":    ff_boundary_m,
+                #    "is_far_field":     float(distance) >= ff_boundary_m,
                 # ── Oda ──
                 "room_dims_m":      [room_x, room_y, room_z],
                 "rt60":             rt60,
@@ -239,23 +246,23 @@ async def ws_simulate(websocket: WebSocket):
                 "snr_db":           snr_db,
                 "ambient_snr_db":   ambient_snr_db,
                 # ── Ses formatı ──
-                "sample_rate":      SAMPLE_RATE,
-                "n_audio_samples":  N_SAMPLES,
+                "sample_rate":      sample_rate,
+                "n_audio_samples":  n_samples,
             }
 
-            paths = save_sample(session_id, i, mic_signals, label)
+            paths = save_sample(session_id, i, mic_signals, label, sample_rate)
 
             DISPLAY_POINTS = 512
-            step = max(1, N_SAMPLES // DISPLAY_POINTS)
+            step = max(1, n_samples // DISPLAY_POINTS)
             waveform_data = mic_signals[:, ::step].tolist()
 
-            wav_bytes = encode_wav_bytes(mic_signals)
+            wav_bytes = encode_wav_bytes(mic_signals, sample_rate)
             wav_b64 = base64.b64encode(wav_bytes).decode("ascii")
 
             msg = {
                 "type": "sample",
                 "index": i,
-                "total": n_samples,
+                "total": n_gens,
                 "label": label,
                 "waveform": waveform_data,
                 "wav_b64": wav_b64,
@@ -268,146 +275,7 @@ async def ws_simulate(websocket: WebSocket):
         await websocket.send_text(json.dumps({
             "type": "done",
             "session_id": session_id,
-            "total": n_samples,
-        }))
-
-    except WebSocketDisconnect:
-        print("Client disconnected")
-    except Exception as e:
-        tb = traceback.format_exc()
-        print(f"[ERROR] {e}\n{tb}")
-        try:
-            await websocket.send_text(json.dumps({
-                "type": "error",
-                "message": str(e),
-            }))
-        except Exception:
-            pass
-
-
-# ─────────────────────────────────────────────────────────────
-# Sağlık kontrolü
-# ─────────────────────────────────────────────────────────────
-@app.get("/health")
-async def health():
-    return {"status": "ok"}
-
-
-# ─────────────────────────────────────────────────────────────
-# Yardımcı: numpy float32 → Python float (JSON serializable)
-# ─────────────────────────────────────────────────────────────
-def _to_python(obj):
-    if isinstance(obj, (np.floating, np.float32, np.float64)):
-        return float(obj)
-    if isinstance(obj, (np.integer,)):
-        return int(obj)
-    if isinstance(obj, np.ndarray):
-        return obj.tolist()
-    return obj
-
-
-# ─────────────────────────────────────────────────────────────
-# WebSocket endpoint
-# ─────────────────────────────────────────────────────────────
-@app.websocket("/ws/simulate")
-async def ws_simulate(websocket: WebSocket):
-    await websocket.accept()
-    try:
-        # ── 1. Config mesajını bekle ──
-        raw = await websocket.receive_text()
-        config = json.loads(raw)
-
-        n_samples      = int(config.get("n_samples", 10))
-        n_mics         = int(config.get("n_mics", 4))
-        mic_radius     = float(config.get("mic_radius", 0.05))
-        snr_db         = float(config.get("snr_db", 20))
-        rt60           = float(config.get("rt60", 0.3))
-        signal_type    = str(config.get("signal_type", "white_noise"))
-        min_dist       = float(config.get("min_distance", 0.5))
-        max_dist       = float(config.get("max_distance", 2.5))
-        delay_ms       = float(config.get("step_delay_ms", 200))
-
-        session_id = f"session_{int(time.time())}_{uuid.uuid4().hex[:6]}"
-
-        await websocket.send_text(json.dumps({
-            "type": "session_start",
-            "session_id": session_id,
-            "total": n_samples,
-        }))
-
-        # ── 2. Döngü ──
-        for i in range(n_samples):
-            # Rastgele kaynak parametreleri
-            azimuth   = random.uniform(0, 360)
-            distance  = random.uniform(min_dist, max_dist)
-
-            # Simülasyon (CPU-bound → thread pool'da çalıştır)
-            loop = asyncio.get_event_loop()
-            result = await loop.run_in_executor(
-                None,
-                lambda az=azimuth, di=distance: simulate(
-                    azimuth_deg=az,
-                    distance_m=di,
-                    n_mics=n_mics,
-                    mic_radius=mic_radius,
-                    snr_db=snr_db,
-                    rt60=rt60,
-                    signal_type=signal_type,
-                ),
-            )
-
-            mic_signals   = result["mic_signals"]   # (n_mics, N_SAMPLES) float32
-            source_signal = result["source_signal"]  # (N_SAMPLES,) float32
-
-            # ── Label ──
-            label = {
-                "sample_index": i,
-                "session_id": session_id,
-                "azimuth_deg": float(azimuth),
-                "distance_m": float(distance),
-                "source_pos": result["source_pos"],
-                "n_mics": n_mics,
-                "mic_radius_m": mic_radius,
-                "snr_db": snr_db,
-                "rt60": rt60,
-                "signal_type": signal_type,
-                "sample_rate": SAMPLE_RATE,
-                "n_audio_samples": N_SAMPLES,
-            }
-
-            # ── Diske kaydet ──
-            paths = save_sample(session_id, i, mic_signals, label)
-
-            # ── Waveform downsample (görselleştirme için) ──
-            # Her kanal için 512 nokta yeterli
-            DISPLAY_POINTS = 512
-            step = max(1, N_SAMPLES // DISPLAY_POINTS)
-            waveform_data = mic_signals[:, ::step].tolist()   # (n_mics, ~DISPLAY_POINTS)
-
-            # ── WAV → base64 (frontend'e audio preview için) ──
-            wav_bytes = encode_wav_bytes(mic_signals)
-            wav_b64 = base64.b64encode(wav_bytes).decode("ascii")
-
-            # ── WebSocket mesajı gönder ──
-            msg = {
-                "type": "sample",
-                "index": i,
-                "total": n_samples,
-                "label": label,
-                "waveform": waveform_data,
-                "wav_b64": wav_b64,
-                "paths": paths,
-            }
-            await websocket.send_text(json.dumps(msg))
-
-            # ── Adımlar arası bekleme ──
-            await asyncio.sleep(delay_ms / 1000.0)
-
-        # ── 3. Tamamlandı ──
-        await websocket.send_text(json.dumps({
-            "type": "done",
-            "session_id": session_id,
-            "total": n_samples,
+            "total": n_gens,
         }))
 
     except WebSocketDisconnect:

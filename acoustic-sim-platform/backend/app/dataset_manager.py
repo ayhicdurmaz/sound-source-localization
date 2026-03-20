@@ -6,7 +6,7 @@ import os
 import json
 import time
 import numpy as np
-from .simulator import encode_wav_bytes, SAMPLE_RATE
+from .simulator import encode_wav_bytes
 
 DATASET_ROOT = os.path.join(os.path.dirname(__file__), "..", "datasets")
 
@@ -22,6 +22,7 @@ def save_sample(
     sample_index: int,
     mic_signals: np.ndarray,
     label: dict,
+    sample_rate: int,
 ) -> dict:
     """
     WAV ve JSON dosyalarını kaydeder.
@@ -34,7 +35,7 @@ def save_sample(
     json_path = os.path.join(session_dir, base_name + ".json")
 
     # WAV kaydet
-    wav_bytes = encode_wav_bytes(mic_signals, SAMPLE_RATE)
+    wav_bytes = encode_wav_bytes(mic_signals, sample_rate)
     with open(wav_path, "wb") as f:
         f.write(wav_bytes)
 

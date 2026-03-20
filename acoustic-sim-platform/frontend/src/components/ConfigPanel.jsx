@@ -215,9 +215,9 @@ export default function ConfigPanel({ config, onChange, onStart, onStop, status 
       {/* ── Dataset ── */}
       {activeTab === "dataset" && (
         <div className="tab-content">
-          <SliderField label="Toplam Sample" name="n_samples"
-            min={C.n_samples.min} max={C.n_samples.max} step={C.n_samples.step}
-            value={config.n_samples} onChange={set} unit="" />
+          <SliderField label="Toplam Üretim" name="n_gens"
+            min={C.n_gens.min} max={C.n_gens.max} step={C.n_gens.step}
+            value={config.n_gens} onChange={set} unit="" />
           <SliderField label="Step Delay" name="step_delay_ms"
             min={C.step_delay_ms.min} max={C.step_delay_ms.max} step={C.step_delay_ms.step}
             value={config.step_delay_ms} onChange={set} unit=" ms" />
@@ -307,7 +307,7 @@ export default function ConfigPanel({ config, onChange, onStart, onStop, status 
           </div>
           <div className="field">
             <div className="field-header">
-              <label>Merkez Z (yükseklik)</label>
+              <label>Merkez Z</label>
               <span className="field-value">
                 {config.mic_center_z != null
                   ? `${config.mic_center_z} m`
@@ -321,7 +321,7 @@ export default function ConfigPanel({ config, onChange, onStart, onStop, status 
             />
           </div>
           <button
-            style={{ fontSize: 11, padding: "3px 12px", marginTop: 4, width: "auto" }}
+            style={{ fontSize: 11, padding: "3px 12px", marginTop: 4, width: "auto", height: "auto" }}
             className="mode-btn"
             onClick={() => onChange({ ...config, mic_center_x: null, mic_center_y: null, mic_center_z: null })}>
             ↩ Oda ortasına sıfırla

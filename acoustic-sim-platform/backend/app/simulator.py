@@ -11,14 +11,6 @@ import math
 import os
 from typing import Optional
 
-
-# ─────────────────────────────────────────────
-# Sabitler (varsayılan — config ile override edilebilir)
-# ─────────────────────────────────────────────
-SAMPLE_RATE = 16000          # Hz
-SIGNAL_DURATION = 1.0        # saniye
-N_SAMPLES = int(SAMPLE_RATE * SIGNAL_DURATION)
-
 # Varsayılan oda boyutları (metre)
 DEFAULT_ROOM_X = 6.0
 DEFAULT_ROOM_Y = 6.0
@@ -74,7 +66,7 @@ def _source_position(azimuth_deg: float, distance_m: float,
 def _generate_source_signal(
     signal_type: str = "white_noise",
     custom_audio_path: Optional[str] = None,
-    start_offset: float = 0.0,
+    start_offset: float = 0.0, sample_rate: int = 16000, duration_sec: float = 1.0
 ) -> np.ndarray:
     """
     Kaynak işareti üretir.
@@ -86,6 +78,9 @@ def _generate_source_signal(
     custom_audio_path: "custom" seçildiğinde kullanılacak dosyanın tam yolu
     start_offset:      WAV içinden başlama noktası (saniye); -1 → rastgele
     """
+    
+    n_samples = int(sample_rate * duration_sec)
+
     if signal_type == "custom" and custom_audio_path and os.path.isfile(custom_audio_path):
         data, sr = sf.read(custom_audio_path, dtype="float32", always_2d=False)
 
@@ -94,35 +89,35 @@ def _generate_source_signal(
             data = data.mean(axis=1)
 
         # Örnekleme hızı farklıysa yeniden örnekle (basit linear interpolation)
-        if sr != SAMPLE_RATE:
+        if sr != sample_rate:
             from scipy.signal import resample_poly
             from math import gcd
-            g = gcd(SAMPLE_RATE, sr)
-            data = resample_poly(data, SAMPLE_RATE // g, sr // g).astype(np.float32)
+            g = gcd(sample_rate, sr)
+            data = resample_poly(data, sample_rate // g, sr // g).astype(np.float32)
 
         total = len(data)
 
-        if total < N_SAMPLES:
+        if total < n_samples:
             # Dosya kısaysa döngüye al
-            repeats = math.ceil(N_SAMPLES / total)
+            repeats = math.ceil(n_samples / total)
             data = np.tile(data, repeats)
 
         # Başlangıç noktası
-        max_start = len(data) - N_SAMPLES
+        max_start = len(data) - n_samples
         if start_offset < 0:
             offset = np.random.randint(0, max_start + 1)
         else:
-            offset = min(int(start_offset * SAMPLE_RATE), max_start)
+            offset = min(int(start_offset * sample_rate), max_start)
 
-        sig = data[offset: offset + N_SAMPLES].astype(np.float32)
+        sig = data[offset: offset + n_samples].astype(np.float32)
 
     elif signal_type == "sine":
         freq = np.random.uniform(200, 4000)
-        t = np.arange(N_SAMPLES) / SAMPLE_RATE
+        t = np.arange(n_samples) / sample_rate
         sig = np.sin(2 * math.pi * freq * t).astype(np.float32)
     else:
         # white_noise (varsayılan)
-        sig = np.random.randn(N_SAMPLES).astype(np.float32)
+        sig = np.random.randn(n_samples).astype(np.float32)
 
     # Normalize
     peak = np.max(np.abs(sig))
@@ -138,6 +133,8 @@ def simulate(
     mic_radius: float,
     snr_db: float,
     rt60: float,
+    sample_rate: int,
+    duration_sec: float,
     signal_type: str = "white_noise",
     custom_audio_path: Optional[str] = None,
     center_mic: bool = False,
@@ -148,7 +145,7 @@ def simulate(
     room_z: float = DEFAULT_ROOM_Z,
     mic_center_x: Optional[float] = None,
     mic_center_y: Optional[float] = None,
-    mic_center_z: Optional[float] = None,
+    mic_center_z: Optional[float] = None,    
 ) -> dict:
     """
     Tek bir simülasyon çalıştırır.
@@ -162,6 +159,9 @@ def simulate(
             "distance_m": float,
         }
     """
+
+    n_samples = int(sample_rate * duration_sec)
+
     # ─── Oda ve mikrofon merkezi ───
     room_dims = [room_x, room_y, room_z]
     cx = mic_center_x if mic_center_x is not None else room_x / 2
@@ -176,7 +176,7 @@ def simulate(
     source_signal = _generate_source_signal(
         signal_type=signal_type,
         custom_audio_path=custom_audio_path,
-        start_offset=-1,
+        start_offset=-1, sample_rate=sample_rate, duration_sec=duration_sec
     )
 
     # ─── Pyroomacoustics odası ───
@@ -186,36 +186,36 @@ def simulate(
 
     room = pra.ShoeBox(
         room_dims,
-        fs=SAMPLE_RATE,
+        fs=sample_rate,
         materials=pra.Material(e_absorption),
         max_order=max_order,
     )
 
     room.add_source(src_pos, signal=source_signal)
 
-    mic_array_2d = mic_arr[:2, :]   # pyroomacoustics 2-D veya 3-D kabul eder
     room.add_microphone(mic_arr)
 
     room.simulate()
 
     mic_signals = room.mic_array.signals  # (n_mics, N_SAMPLES+tail)
     # Uzunluğu N_SAMPLES'a kes
-    mic_signals = mic_signals[:, :N_SAMPLES].astype(np.float32)
+    mic_signals = mic_signals[:, :n_samples].astype(np.float32)
 
     # ─── Mikrofon öz gürültüsü ekle (her kanal için bağımsız) ───
     if snr_db < 100:
-        signal_power = np.mean(mic_signals ** 2)
-        if signal_power > 0:
-            noise_power = signal_power / (10 ** (snr_db / 10))
-            noise = np.random.randn(*mic_signals.shape).astype(np.float32) * math.sqrt(noise_power)
-            mic_signals += noise
+        signal_power = np.mean(mic_signals**2, axis=1, keepdims=True) 
+        mask = signal_power > 0  
+        noise_power = np.zeros_like(signal_power, dtype=np.float32)
+        noise_power[mask] = signal_power[mask] / (10 ** (snr_db / 10))
+        noise = np.random.randn(*mic_signals.shape).astype(np.float32) * np.sqrt(noise_power)
+        mic_signals += noise
 
     # ─── Ortam gürültüsü ekle (tüm kanallara aynı sinyal — diffuse field) ───
     # Ortam sesi (trafik, kalabalık vb.) çok uzaktan gelir; array küçük (cm mertebesinde)
     # olduğundan tüm mikrofonlar pratikte aynı ortam sesini aynı anda duyar.
     if ambient_snr_db < 100:
-        signal_power = np.mean(mic_signals ** 2)
-        if signal_power > 0:
+        signal_power = float(np.mean(mic_signals ** 2))
+        if signal_power > 0.0:
             ambient_noise_power = signal_power / (10 ** (ambient_snr_db / 10))
             if ambient_audio_path and os.path.isfile(ambient_audio_path):
                 # Dosyadan ortam gürültüsü al — rastgele bir başlangıç noktası seç (tüm kanallar için aynı)
@@ -224,23 +224,23 @@ def simulate(
                     custom_audio_path=ambient_audio_path,
                     start_offset=-1,
                 )
-                offset = np.random.randint(0, max(1, len(ambient_sig) - N_SAMPLES + 1)) if len(ambient_sig) > N_SAMPLES else 0
-                looped = np.tile(ambient_sig, math.ceil((N_SAMPLES + offset) / max(1, len(ambient_sig))))
-                seg = looped[offset:offset + N_SAMPLES].astype(np.float32)
+                offset = np.random.randint(0, max(1, len(ambient_sig) - n_samples + 1)) if len(ambient_sig) > n_samples else 0
+                looped = np.tile(ambient_sig, math.ceil((n_samples + offset) / max(1, len(ambient_sig))))
+                seg = looped[offset:offset + n_samples].astype(np.float32)
                 # Güce göre ölçekle
-                seg_power = np.mean(seg ** 2)
-                if seg_power > 0:
+                seg_power = float(np.mean(seg ** 2))
+                if seg_power > 0.0:
                     seg = seg * math.sqrt(ambient_noise_power / seg_power)
                 # Tüm kanallara aynı segment ekle
                 mic_signals += seg[np.newaxis, :]
             else:
                 # Gaussian ortam gürültüsü — tüm kanallara aynı sinyal
-                ambient_noise = np.random.randn(N_SAMPLES).astype(np.float32) * math.sqrt(ambient_noise_power)
+                ambient_noise = np.random.randn(n_samples).astype(np.float32) * math.sqrt(ambient_noise_power)
                 mic_signals += ambient_noise[np.newaxis, :]
 
     # ─── Normalize (clip to [-1, 1]) ───
-    peak = np.max(np.abs(mic_signals))
-    if peak > 0:
+    peak = float(np.max(np.abs(mic_signals)))
+    if peak > 0.0:
         mic_signals /= peak
 
     return {
@@ -252,7 +252,7 @@ def simulate(
     }
 
 
-def encode_wav_bytes(mic_signals: np.ndarray, sample_rate: int = SAMPLE_RATE) -> bytes:
+def encode_wav_bytes(mic_signals: np.ndarray, sample_rate: int) -> bytes:
     """
     (n_mics, N_SAMPLES) float32 dizisini çok kanallı WAV bytes olarak döndürür.
     """

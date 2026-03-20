@@ -11,11 +11,11 @@
 export const UI_CONFIG = {
 
   // ── Dataset ──────────────────────────────────────────────
-  n_samples: {
+  n_gens: {
     min: 1,
     max: 500,
     step: 1,
-    default: 20,
+    default: 10,
   },
 
   step_delay_ms: {

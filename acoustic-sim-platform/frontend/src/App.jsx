@@ -12,7 +12,7 @@ const WS_URL = `ws://${window.location.hostname}:8000/ws/simulate`;
 
 const C = UI_CONFIG;
 const DEFAULT_CONFIG = {
-  n_samples:      C.n_samples.default,
+  n_gens:         C.n_gens.default,
   n_mics:         C.n_mics.default,
   mic_radius:     C.mic_radius.default,
   snr_db:         C.snr_db.default,
