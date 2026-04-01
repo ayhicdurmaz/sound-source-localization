@@ -1,0 +1,15 @@
+{
+  "sources": [
+    {
+      "azimuth_deg": 285.62224850572073,
+      "distance_m": 2.758404862334516,
+      "source_pos": [
+        3.2428213429788775,
+        0.1,
+        1.5
+      ],
+      "signal_type": "custom",
+      "custom_audio_path": "/app/app/../uploads/sources/8dfa0d4a_ss_baby_talk.wav"
+    }
+  ]
+}

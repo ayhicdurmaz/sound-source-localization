@@ -1,0 +1,29 @@
+{
+  "n_gens": 10,
+  "n_mics": 7,
+  "mic_radius": 0.15,
+  "snr_db": 0,
+  "rt60": 0.2,
+  "source_count": 1,
+  "sources": [
+    {
+      "signal_type": "custom",
+      "custom_audio_file": "8dfa0d4a_ss_baby_talk.wav"
+    }
+  ],
+  "field_mode": "nearfield",
+  "min_distance": 0.5,
+  "max_distance": 2.5,
+  "step_delay_ms": 300,
+  "center_mic": true,
+  "room_x": 5,
+  "room_y": 5,
+  "room_z": 3,
+  "mic_center_x": null,
+  "mic_center_y": null,
+  "mic_center_z": null,
+  "sample_rate": 16000,
+  "ambient_snr_db": 0,
+  "ambient_audio_file": "09f9eb49_bg_train.wav",
+  "duration_sec": 1
+}

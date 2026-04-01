@@ -1,0 +1,15 @@
+{
+  "sources": [
+    {
+      "azimuth_deg": 78.45870057535274,
+      "distance_m": 2.5950707555851817,
+      "source_pos": [
+        3.019206765080066,
+        4.9,
+        1.5
+      ],
+      "signal_type": "custom",
+      "custom_audio_path": "/app/app/../uploads/sources/c52eb52d_ss_gun_reload.wav"
+    }
+  ]
+}

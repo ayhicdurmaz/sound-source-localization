@@ -1,0 +1,43 @@
+[project]
+name = "acoustic-lab"
+version = "0.1.0"
+description = "Benchmark framework for sound source localization algorithms (GCC-PHAT, DAS, SRP-PHAT, MVDR, MUSIC, ESPRIT)."
+requires-python = ">=3.10"
+readme = "README.md"
+
+dependencies = [
+  "numpy>=1.26",
+  "scipy>=1.11",
+  "soundfile>=0.12",
+  "PyYAML>=6.0",
+  "pandas>=2.1",
+  "matplotlib>=3.8",
+  "tqdm>=4.66",
+  "typer>=0.12",
+  "rich>=13.7",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0",
+  "ruff>=0.4",
+  "black>=24.0",
+  "pre-commit>=3.7",
+]
+
+[project.scripts]
+aclab = "acoustic_lab.cli:app"
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+
+[tool.black]
+line-length = 100
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

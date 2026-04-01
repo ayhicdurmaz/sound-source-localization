@@ -1,0 +1,30 @@
+{
+  "n_gens": 5,
+  "n_mics": 7,
+  "mic_radius": 0.1,
+  "snr_db": 15,
+  "rt60": 0.3,
+  "source_count": 1,
+  "sources": [
+    {
+      "signal_type": "custom",
+      "custom_audio_file": "ef40a4c7_ss_woman_shouting.wav"
+    }
+  ],
+  "field_mode": "farfield",
+  "min_distance": 1.87,
+  "max_distance": 3.54,
+  "step_delay_ms": 50,
+  "center_mic": true,
+  "room_x": 5,
+  "room_y": 5,
+  "room_z": 3,
+  "mic_center_x": null,
+  "mic_center_y": null,
+  "mic_center_z": null,
+  "sample_rate": 16000,
+  "ambient_snr_db": 30,
+  "ambient_audio_file": "8f6ae18b_bg_drill.wav",
+  "duration_sec": 1,
+  "sweep_uuid": "sweep_1775029828746_917d63"
+}

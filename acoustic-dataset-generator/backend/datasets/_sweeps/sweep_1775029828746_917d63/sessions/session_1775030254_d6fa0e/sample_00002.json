@@ -1,0 +1,15 @@
+{
+  "sources": [
+    {
+      "azimuth_deg": 306.09084777147933,
+      "distance_m": 3.5093530784595597,
+      "source_pos": [
+        4.567245087730566,
+        0.1,
+        1.5
+      ],
+      "signal_type": "custom",
+      "custom_audio_path": "/app/app/../uploads/sources/4506e665_ss_bark.wav"
+    }
+  ]
+}

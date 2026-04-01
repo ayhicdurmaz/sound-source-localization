@@ -1,0 +1,15 @@
+{
+  "sources": [
+    {
+      "azimuth_deg": 199.17267790612905,
+      "distance_m": 2.21660416183331,
+      "source_pos": [
+        1.9063440297622405,
+        2.2720311211703237,
+        1.5
+      ],
+      "signal_type": "custom",
+      "custom_audio_path": "/app/app/../uploads/sources/f6379f66_ss_paintball_gun.wav"
+    }
+  ]
+}

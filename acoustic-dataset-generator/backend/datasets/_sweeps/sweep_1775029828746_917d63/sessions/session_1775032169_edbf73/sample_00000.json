@@ -1,0 +1,15 @@
+{
+  "sources": [
+    {
+      "azimuth_deg": 110.44461384070402,
+      "distance_m": 5.198757587075889,
+      "source_pos": [
+        3.184064803796261,
+        9.871289337779846,
+        2.5
+      ],
+      "signal_type": "custom",
+      "custom_audio_path": "/app/app/../uploads/sources/ef40a4c7_ss_woman_shouting.wav"
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "schema": 1,
+  "created_at": 1774282727,
+  "updated_at": 1774282727,
+  "total": 3,
+  "done": 0,
+  "meta": {
+    "created_by": "frontend"
+  },
+  "combos": [
+    {
+      "i": 0,
+      "params": {
+        "source_files_group": [
+          "4506e665_ss_bark.wav"
+        ],
+        "snr_db": 1,
+        "room_dims": "(5,5,3)",
+        "rt60": 1,
+        "ambient_snr_db": 3,
+        "ambient_audio_file": "09f9eb49_bg_train.wav"
+      },
+      "status": "pending",
+      "started_at": null,
+      "done_at": null,
+      "error": null,
+      "meta": {}
+    },
+    {
+      "i": 1,
+      "params": {
+        "source_files_group": [
+          "4506e665_ss_bark.wav"
+        ],
+        "snr_db": 1,
+        "room_dims": "(5,5,3)",
+        "rt60": 1,
+        "ambient_snr_db": 3,
+        "ambient_audio_file": "09fe7694_bg_vacuum_cleaner.wav"
+      },
+      "status": "pending",
+      "started_at": null,
+      "done_at": null,
+      "error": null,
+      "meta": {}
+    },
+    {
+      "i": 2,
+      "params": {
+        "source_files_group": [
+          "4506e665_ss_bark.wav"
+        ],
+        "snr_db": 1,
+        "room_dims": "(5,5,3)",
+        "rt60": 1,
+        "ambient_snr_db": 3,
+        "ambient_audio_file": "79b08b3a_bg_babble.wav"
+      },
+      "status": "pending",
+      "started_at": null,
+      "done_at": null,
+      "error": null,
+      "meta": {}
+    }
+  ]
+}
