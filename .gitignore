@@ -17,18 +17,18 @@ venv/
 .vscode/
 
 # Dataset outputs
-acoustic-sim-platform/backend/datasets/**
-!acoustic-sim-platform/backend/datasets/.gitkeep
+acoustic-dataset-generator/backend/datasets/**
+!acoustic-dataset-generator/backend/datasets/.gitkeep
 
 # Uploads (keep folder, ignore files)
-acoustic-sim-platform/backend/uploads/**
-!acoustic-sim-platform/backend/uploads/.gitkeep
+acoustic-dataset-generator/backend/uploads/**
+!acoustic-dataset-generator/backend/uploads/.gitkeep
 
 # Frontend build artifacts
-acoustic-sim-platform/frontend/node_modules/
-acoustic-sim-platform/frontend/dist/
-acoustic-sim-platform/frontend/dist-ssr/
-acoustic-sim-platform/frontend/*.local
+acoustic-dataset-generator/frontend/node_modules/
+acoustic-dataset-generator/frontend/dist/
+acoustic-dataset-generator/frontend/dist-ssr/
+acoustic-dataset-generator/frontend/*.local
 
 # Logs
 *.log
