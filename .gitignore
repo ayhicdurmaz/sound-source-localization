@@ -17,11 +17,11 @@ venv/
 .vscode/
 
 # Dataset outputs
-acoustic-sim-platform/backend/datasets/*
+acoustic-sim-platform/backend/datasets/**
 !acoustic-sim-platform/backend/datasets/.gitkeep
 
 # Uploads (keep folder, ignore files)
-acoustic-sim-platform/backend/uploads/*
+acoustic-sim-platform/backend/uploads/**
 !acoustic-sim-platform/backend/uploads/.gitkeep
 
 # Frontend build artifacts

@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Research/3. Geleneksel Algoritmalar/3. Alt Uzay ve Yüksek Çözünürlüklü Yöntemler/1.1 Psirenko Harmonik Ayrışımı.md",
+                "file": "Research/3. Geleneksel Algoritmalar/Ekstralar/ITD ve ILD.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "1.1 Psirenko Harmonik Ayrışımı"
+              "title": "ITD ve ILD"
             }
           }
         ]
@@ -171,6 +171,7 @@
   },
   "active": "15647c703292af03",
   "lastOpenFiles": [
+    "Research/3. Geleneksel Algoritmalar/3. Alt Uzay ve Yüksek Çözünürlüklü Yöntemler/1.1 Psirenko Harmonik Ayrışımı.md",
     "Research/3. Geleneksel Algoritmalar/3. Alt Uzay ve Yüksek Çözünürlüklü Yöntemler/1. MUSIC.md",
     "Research/2. Veri Toplama ve Üretme/9. Simülasyon Parametreleri Değiştirme Stratejisi.md",
     "acoustic-dataset-generator/backend/datasets/session_1774232782_63b7ee/sample_00007.json",
@@ -193,7 +194,6 @@
     "Research/2. Veri Toplama ve Üretme/1. Fiziksel Kurulum ve Donanım.md",
     "Research/3. Geleneksel Algoritmalar/3. Alt Uzay ve Yüksek Çözünürlüklü Yöntemler/2. ESPRIT.md",
     "Research/3. Geleneksel Algoritmalar/3. Alt Uzay ve Yüksek Çözünürlüklü Yöntemler/1.2 Min Norm.md",
-    "Research/3. Geleneksel Algoritmalar/3. Alt Uzay ve Yüksek Çözünürlüklü Yöntemler/1.1 Psirenko Harmonik Ayrışımı.md",
     "Research/3. Geleneksel Algoritmalar/2. Yönlendirilmiş Güç Yöntemleri/3. MVDR.md",
     "Research/3. Geleneksel Algoritmalar/2. Yönlendirilmiş Güç Yöntemleri/2. SRP-PHAT.md",
     "Research/3. Geleneksel Algoritmalar/2. Yönlendirilmiş Güç Yöntemleri/1. Delay And Sum.md",
