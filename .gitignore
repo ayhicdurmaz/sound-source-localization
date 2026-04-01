@@ -18,11 +18,9 @@ venv/
 
 # Dataset outputs
 acoustic-dataset-generator/backend/datasets/**
-!acoustic-dataset-generator/backend/datasets/.gitkeep
 
 # Uploads (keep folder, ignore files)
 acoustic-dataset-generator/backend/uploads/**
-!acoustic-dataset-generator/backend/uploads/.gitkeep
 
 # Frontend build artifacts
 acoustic-dataset-generator/frontend/node_modules/
