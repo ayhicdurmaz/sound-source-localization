@@ -13,15 +13,28 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Research/3. Geleneksel Algoritmalar/Ekstralar/ITD ve ILD.md",
+                "file": "1002-a/Untitled.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "ITD ve ILD"
+              "title": "Untitled"
+            }
+          },
+          {
+            "id": "e3dba82f4c4c8d5d",
+            "type": "leaf",
+            "state": {
+              "type": "pdf",
+              "state": {
+                "file": "Archive/A survey of sound source localization with deep learning.pdf"
+              },
+              "icon": "lucide-file-text",
+              "title": "A survey of sound source localization with deep learning"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -78,7 +91,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 357.5
+    "width": 357.5,
+    "collapsed": true
   },
   "right": {
     "id": "400bfdcbc84b8311",
@@ -169,42 +183,43 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "15647c703292af03",
+  "active": "e3dba82f4c4c8d5d",
   "lastOpenFiles": [
-    "Research/3. Geleneksel Algoritmalar/3. Alt Uzay ve Yüksek Çözünürlüklü Yöntemler/1.1 Psirenko Harmonik Ayrışımı.md",
+    "Research/4. Yapay Sinir Ağı Tabanlı Yöntemleri/3. CRNN.md",
+    "Research/4. Yapay Sinir Ağı Tabanlı Yöntemleri/1. CNN Tabanlı Yöntemler.md",
+    "Research/3. Geleneksel Algoritmalar/3. Alt Uzay ve Yüksek Çözünürlüklü Yöntemler/2. ESPRIT.md",
     "Research/3. Geleneksel Algoritmalar/3. Alt Uzay ve Yüksek Çözünürlüklü Yöntemler/1. MUSIC.md",
-    "Research/2. Veri Toplama ve Üretme/9. Simülasyon Parametreleri Değiştirme Stratejisi.md",
-    "acoustic-dataset-generator/backend/datasets/session_1774232782_63b7ee/sample_00007.json",
-    "acoustic-dataset-generator/backend/datasets/session_1774232782_63b7ee/sample_00007.wav",
-    "acoustic-dataset-generator/backend/datasets/session_1774232782_63b7ee/sample_00006.json",
-    "acoustic-dataset-generator/backend/datasets/session_1774232782_63b7ee/sample_00006.wav",
-    "acoustic-dataset-generator/backend/datasets/session_1774232782_63b7ee/sample_00005.json",
-    "acoustic-dataset-generator/backend/datasets/session_1774232782_63b7ee/sample_00005.wav",
-    "acoustic-dataset-generator/backend/datasets/session_1774232782_63b7ee/sample_00004.json",
-    "acoustic-dataset-generator/backend/datasets/session_1774232782_63b7ee/sample_00004.wav",
-    "acoustic-dataset-generator/backend/datasets/session_1774232782_63b7ee/sample_00003.json",
-    "acoustic-dataset-generator/backend/datasets/session_1774232782_63b7ee/sample_00003.wav",
-    "Research/2. Veri Toplama ve Üretme/8. Veri Çoğaltma ve Versiyonlama.md",
+    "Research/3. Geleneksel Algoritmalar/2. Yönlendirilmiş Güç Yöntemleri/2. SRP-PHAT.md",
+    "Research/3. Geleneksel Algoritmalar/1. TDOA/1. GCC-PHAT.md",
+    "Research/3. Geleneksel Algoritmalar/2. Yönlendirilmiş Güç Yöntemleri/3. MVDR.md",
+    "Research/3. Geleneksel Algoritmalar/2. Yönlendirilmiş Güç Yöntemleri/1. Delay And Sum.md",
     "Research/2. Veri Toplama ve Üretme/7. Veri İşleme ve Pipeline.md",
     "Research/2. Veri Toplama ve Üretme/6. Simülasyon Uygulaması ve Kaynaklar.md",
     "Research/2. Veri Toplama ve Üretme/5. Simülasyon Teorisi ve Modeli.md",
-    "acoustic-lab/README.md",
     "Research/2. Veri Toplama ve Üretme/4. Etiketleme Yöntemleri.md",
     "Research/2. Veri Toplama ve Üretme/2. Kayıt Yazılımı ve Formatı.md",
     "Research/2. Veri Toplama ve Üretme/1. Fiziksel Kurulum ve Donanım.md",
-    "Research/3. Geleneksel Algoritmalar/3. Alt Uzay ve Yüksek Çözünürlüklü Yöntemler/2. ESPRIT.md",
-    "Research/3. Geleneksel Algoritmalar/3. Alt Uzay ve Yüksek Çözünürlüklü Yöntemler/1.2 Min Norm.md",
-    "Research/3. Geleneksel Algoritmalar/2. Yönlendirilmiş Güç Yöntemleri/3. MVDR.md",
-    "Research/3. Geleneksel Algoritmalar/2. Yönlendirilmiş Güç Yöntemleri/2. SRP-PHAT.md",
-    "Research/3. Geleneksel Algoritmalar/2. Yönlendirilmiş Güç Yöntemleri/1. Delay And Sum.md",
-    "Research/3. Geleneksel Algoritmalar/1. TDOA/1. GCC-PHAT.md",
-    "Research/3. Geleneksel Algoritmalar/1. TDOA/Alternatifler.md",
-    "Research/3. Geleneksel Algoritmalar/Ekstralar/ITD ve ILD.md",
+    "Research/1. Mikrofon Dizi Tasarım Teorisi/5. Algoritmik Yaklaşımlar ve Tasarım Gereksinimleri.md",
+    "Research/1. Mikrofon Dizi Tasarım Teorisi/6. Temel Tasarım Ödünleşmeleri.md",
+    "Research/1. Mikrofon Dizi Tasarım Teorisi/4. Donanım Bileşenlerinin Sistem Doğruluğuna Etkisi.md",
+    "Research/1. Mikrofon Dizi Tasarım Teorisi/3. Örnekleme Teorisi Zaman ve Uzay.md.md",
     "Research/1. Mikrofon Dizi Tasarım Teorisi/2. Dizi Geometrisi ve Yönlendirme Vektörü.md",
-    "acoustic-sim-backend-code-docs/simulator.py – README.md",
-    "acoustic-sim-backend-code-docs/main.py - README.md",
-    "acoustic-sim-backend-code-docs/dataset_manager.py - README.md",
-    "acoustic-sim-platform/README.md",
-    "VERI_YAPISI.md"
+    "Research/1. Mikrofon Dizi Tasarım Teorisi/7. Telefon Mikrofonu Kullanmak.md",
+    "Research/1. Mikrofon Dizi Tasarım Teorisi/1. Sinyal Modeli ve Akustik Varsayımlar.md",
+    "Archive/The Design of an Microphone Array.pdf",
+    "Archive/SPATIAL ALIASING-CANCELLATION FOR CIRCULAR MICROPHONE ARRAYS.pdf",
+    "Archive/Sound Source Localization for Unmanned Aerial Vehicles in Low.pdf",
+    "Archive/Sound Source Localization A Survey.pdf",
+    "Archive/Simulated analysis and hardware implementation of voiceband circular microphone array.pdf",
+    "Archive/Microphone Arrays  A Tutorial.pdf",
+    "Archive/A New DOA Estimation Method Using a Circular Microphone Array.pdf",
+    "Archive/A Survey of Sound Source Localization and Detection Methods.pdf",
+    "Archive/A survey of sound source localization with deep learning.pdf",
+    "Research/3. Geleneksel Algoritmalar/1. TDOA/Alternatifler.md",
+    "Research/2. Veri Toplama ve Üretme/9. Simülasyon Parametreleri Değiştirme Stratejisi.md",
+    "Research/2. Veri Toplama ve Üretme/8. Veri Çoğaltma ve Versiyonlama.md",
+    "Archive/Sound_Event_Detection_and_Localization_with_Distance_Estimation.pdf",
+    "Research/3. Geleneksel Algoritmalar/3. Alt Uzay ve Yüksek Çözünürlüklü Yöntemler/1.2 Min Norm.md",
+    "Research/3. Geleneksel Algoritmalar/Ekstralar/ITD ve ILD.md"
   ]
 }
