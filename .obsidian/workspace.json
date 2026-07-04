@@ -25,12 +25,14 @@
             "id": "e3dba82f4c4c8d5d",
             "type": "leaf",
             "state": {
-              "type": "pdf",
+              "type": "markdown",
               "state": {
-                "file": "Archive/A survey of sound source localization with deep learning.pdf"
+                "file": "Research/4. Yapay Sinir Ağı Tabanlı Yöntemleri/6. Hybrid Yöntemler.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-file-text",
-              "title": "A survey of sound source localization with deep learning"
+              "icon": "lucide-file",
+              "title": "6. Hybrid Yöntemler"
             }
           }
         ],
@@ -91,8 +93,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 357.5,
-    "collapsed": true
+    "width": 357.5
   },
   "right": {
     "id": "400bfdcbc84b8311",
@@ -185,8 +186,12 @@
   },
   "active": "e3dba82f4c4c8d5d",
   "lastOpenFiles": [
-    "Research/4. Yapay Sinir Ağı Tabanlı Yöntemleri/3. CRNN.md",
+    "Research/4. Yapay Sinir Ağı Tabanlı Yöntemleri/5. Raw Audio Modelleri.md",
+    "Research/4. Yapay Sinir Ağı Tabanlı Yöntemleri/4. Transformer Mimarileri.md",
     "Research/4. Yapay Sinir Ağı Tabanlı Yöntemleri/1. CNN Tabanlı Yöntemler.md",
+    "Research/3. Geleneksel Algoritmalar/Ekstralar/ITD ve ILD.md",
+    "Archive/A survey of sound source localization with deep learning.pdf",
+    "Research/4. Yapay Sinir Ağı Tabanlı Yöntemleri/3. CRNN.md",
     "Research/3. Geleneksel Algoritmalar/3. Alt Uzay ve Yüksek Çözünürlüklü Yöntemler/2. ESPRIT.md",
     "Research/3. Geleneksel Algoritmalar/3. Alt Uzay ve Yüksek Çözünürlüklü Yöntemler/1. MUSIC.md",
     "Research/3. Geleneksel Algoritmalar/2. Yönlendirilmiş Güç Yöntemleri/2. SRP-PHAT.md",
@@ -214,12 +219,8 @@
     "Archive/Microphone Arrays  A Tutorial.pdf",
     "Archive/A New DOA Estimation Method Using a Circular Microphone Array.pdf",
     "Archive/A Survey of Sound Source Localization and Detection Methods.pdf",
-    "Archive/A survey of sound source localization with deep learning.pdf",
     "Research/3. Geleneksel Algoritmalar/1. TDOA/Alternatifler.md",
     "Research/2. Veri Toplama ve Üretme/9. Simülasyon Parametreleri Değiştirme Stratejisi.md",
-    "Research/2. Veri Toplama ve Üretme/8. Veri Çoğaltma ve Versiyonlama.md",
-    "Archive/Sound_Event_Detection_and_Localization_with_Distance_Estimation.pdf",
-    "Research/3. Geleneksel Algoritmalar/3. Alt Uzay ve Yüksek Çözünürlüklü Yöntemler/1.2 Min Norm.md",
-    "Research/3. Geleneksel Algoritmalar/Ekstralar/ITD ve ILD.md"
+    "Archive/Sound_Event_Detection_and_Localization_with_Distance_Estimation.pdf"
   ]
 }
